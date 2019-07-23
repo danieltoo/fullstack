@@ -1,0 +1,51 @@
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+server-->browser: HTML-code
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+server-->browser: main.js
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server 
+end note
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
+
+note over browser:
+When the User write a note into the textField
+and do click on the button "Save",
+the browser stops the form submit using e.preventDefault()
+end note 
+note over browser:
+the body of the request includes the note writen by the user 
+end note 
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
+
+note over server:
+the server recive into the body the variable note 
+and the server add the note and the date into the 
+notes array
+end note
+
+note over server:
+The server responds with HTTP status code 200,
+This time the server does not ask for a redirect,
+the browser stays on the same page
+end note
+
+server->browser: Response 201 Created
+
+note over browser:
+Then the event handler creates a new note,
+adds it to the notes list with the command notes.push(note)
+on the notes Array, and call redrawNotes() to update
+the notes list
+end note
+
